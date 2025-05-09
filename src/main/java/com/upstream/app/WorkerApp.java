@@ -10,5 +10,6 @@ import io.temporal.worker.WorkerFactory;
 public class WorkerApp {
     public static void main(String[] args) {
         System.out.println("Worker started.");
+        // @TODO missing implementation
     }
 }

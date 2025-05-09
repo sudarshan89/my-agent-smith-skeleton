@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 public class ActivityImplementations {
     // initialised in the WorkerApp
     static LLMManager.LLMClient llmClient;
-
+    // @TODO missing implementation across all the activity implementations
     public static class FetchContentActivityImpl implements Activities.FetchContentActivity {
         @Override
         public String fetch(String url) {

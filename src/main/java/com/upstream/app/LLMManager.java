@@ -77,15 +77,8 @@ public class LLMManager {
                                 }
                         """.formatted(jsonEscape(titanPrompt));
 
-                InvokeModelRequest request = InvokeModelRequest.builder()
-                        .modelId(Constants.MODEL_ID) // or any available model
-                        .contentType("application/json")
-                        .accept("application/json")
-                        .body(SdkBytes.fromUtf8String(jsonPayload))
-                        .build();
-
-                InvokeModelResponse response = client.invokeModel(request);
-                String responseText = extractOutputText(response.body().asUtf8String());
+               // @TODO missing implementation
+                String responseText = "";
                 System.out.println("Model output " + responseText);
                 return responseText;
             } catch (Exception e) {
