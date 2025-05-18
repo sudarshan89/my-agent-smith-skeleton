@@ -31,8 +31,6 @@ All development will take place in pre-provisioned AWS environments. No local se
 ## Java Setup (OpenJDK 17) ☕
 
 ```bash
-sudo amazon-linux-extras enable corretto17
-sudo yum clean metadata
 sudo yum install -y java-17-amazon-corretto-devel
 java -version
 ```
@@ -69,7 +67,7 @@ https://<your-cloud9-subdomain>.cloudfront.net/proxy/8233/
 
 ## Install Java Extension Pack
 
-1. Search for `Extension Pack for Java` in VS Code extensions
+1. Search for `Extension Pack for Java` in VS Code extensions (choose vscjava publisher)
 2. Install and verify it by checking for `Java Ready` in the status bar
 
 ![Java Extension Pack](./docs/extension-pack-for-java.png)
@@ -91,9 +89,40 @@ https://<your-cloud9-subdomain>.cloudfront.net/proxy/8233/
 ```bash
 git clone https://github.com/sudarshan89/my-agent-smith-skeleton.git
 ```
-
 ---
 
+---
+VSCode - This JVM configuration is required to run it reliably on the resource constrained codeserver
+
+Add settings.json
+
+```
+Press Ctrl+Shift+P (or Cmd+Shift+P on Mac)
+Type and select:
+“Preferences: Open Workspace Settings (JSON)”
+VS Code will open or create the correct settings.json file for you.
+```
+
+
+```
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".mule": true
+    },
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -XX:ActiveProcessorCount=1 -Dsun.zip.disableMemoryMapping=true -Xmx512m -Xms100m -Xlog:disable",
+    "java.format.settings.url": ".vscode/java-formatter.xml"
+}
+
+```
+
+![Settings JSON](./docs/settings-json.png)
+---
 ## Steps to Execute ▶️
 
 1. **Run `WorkerTest`**
@@ -137,10 +166,37 @@ Respond in plain English with the key updates developers should know about.
 
 * Java Skeleton Implementation: [GitHub - My Agent Smith (Java)](https://github.com/sudarshan89/my-agent-smith-skeleton)
 * Java Full Implementation: [GitHub - My Agent Smith (Java)](https://github.com/sudarshan89/my-agent-smith)
-* Python Skeleton Implementation: *Coming soon*
-* Python Full Implementation: *Coming soon*
+* Python Skeleton Implementation:
+[Python Skeleton](https://github.com/taonic/my-agent-smith-python-skeleton)
+* Python Full Implementation: [Python implementation](https://github.com/taonic/my-agent-smith-python)
 
 ---
 
 ## Hackathon 📌
 * Use prompt engineering to build out your solution
+
+
+---
+
+## Sample prompts
+* LLMManager.java (invokeBedrock)
+
+```
+I’m integrating with Amazon Bedrock using the AWS SDK v2 for Java. Complete invokeBedrock Java method to call amazon.titan-text-express-v1 using BedrockRuntimeClient. The payload is a JSON string, and the response should extract the "outputText" field and return it as a string.
+```
+
+* WorkerApp.java (implementation)
+```
+Generate the main method for a Java class that starts a Temporal worker on the "CONTENT_AMPLIFIER_TASK_QUEUE".
+
+It should:
+- Use local stubs and WorkflowClient
+- Register ContentAmplifierWorkflowImpl
+- Register four activity implementations```
+```
+
+* ContentAmplifierWorkflowImpl.java (implementation)
+
+```
+Complete the run() method in ContentAmplifierWorkflowImpl to fetch content, detect changes, generate a diff summary, select a channel, and promote the update.
+```
